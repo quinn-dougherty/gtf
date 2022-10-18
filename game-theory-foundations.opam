@@ -1,0 +1,29 @@
+opam-version: "2.1"
+name: "game-theory-foundations"
+version: "dev"
+maintainer: "Quinn Dougherty <quinnd@riseup.net>"
+synopsis: "Executable textbook"
+
+homepage: "https://github.com/quinn-dougherty/gtf"
+dev-repo: "git+https://github.com/quinn-dougherty/gtf.git"
+bug-reports: "https://github.com/quinn-dougherty/gtf/issues"
+
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "build" "--root=." "-j" jobs] {with-test}
+  ["dune" "runtest" "--root=." "-j" jobs] {with-test}
+]
+
+depends: [
+  "ocaml"
+  "coq" {>= "8.12"}
+  "coq-mathcomp"
+  "coq-mathcomp-analysis"
+  "coq-paco"
+  "dune" {>= "3.0"}
+]
+authors: [
+  "Quinn Dougherty <quinnd@riseup.net"
+]
+license: [ "MIT" ]
