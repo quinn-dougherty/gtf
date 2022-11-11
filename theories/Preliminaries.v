@@ -41,6 +41,8 @@ Fixpoint fmap_tree' {A B : Type} (f : A -> B) (x : tree A) : tree B
 
 (** Bool and Prop
 
+NOTE: I WROTE THIS BEFORE I DECIDED TO USE MATHCOMP, SO IT'LL BE DELETED
+
 We will leverage the property of _decidability_, which some propositions have.
 
 Coq takes place in _constructive logic_, meaning _law of excluded middle (LEM) is omitted_.

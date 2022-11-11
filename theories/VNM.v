@@ -4,7 +4,6 @@ From mathcomp Require Import classical_sets interval all_ssreflect all_algebra o
 From mathcomp.analysis Require Import reals topology measure.
 Import Order.Theory.
 
-
 Module Type Interval.
   Local Open Scope ring_scope.
   Local Open Scope classical_set_scope.
@@ -22,27 +21,38 @@ Module Stream.
   CoInductive t {A : Type} : Type := cons (x : A) (y : t) : t.
   Definition hd {A : Type} (stream : t) : A := match stream with | cons x _ => x end.
   Definition tl {A : Type} (stream : t) : @t A := match stream with | cons _ y => y end.
-  CoFixpoint map {A B : Type} (f : A -> B) (stream : @t A) : @t B := match stream with | cons x y => cons (f x) (map f y) end.
+  CoFixpoint map {A B : Type} (f : A -> B) (stream : @t A) : @t B
+    := match stream with | cons x y => cons (f x) (map f y) end.
 End Stream.
 
-Module Type Lottery (Number : Interval).
+Module Type DiscreteDistribution (Number : Interval).
+
+  Context (O : finPOrderType tt).
+
+  Local Open Scope ring_scope.
+
+  Class rv : Type := {
+      pmf :> {ffun O -> Number.unit_compact};
+      convex : foldr (@GRing.add Number.t) (0 : Number.t) (map pmf (enum O)) = 1;
+    }.
+
+End DiscreteDistribution.
+
+Module Type Lottery (Number : Interval) (Dist : DiscreteDistribution Number).
   Local Open Scope order_scope.
   Notation "o1 == o2" := (o1 <= o2 && o2 <= o1) : order_scope.
-
   Close Scope order_scope.
+
   Parameter (O : finPOrderType tt).
   Definition t : Type := seq (Number.unit_compact * O).
 
-  Definition lottery (ps : Number.fin_unit_compact) `{Number.convex ps} {H : length ps = #|O|} : t := zip ps (enum O).
+  Definition lottery (ps : Number.fin_unit_compact) `{Number.convex ps} {H : length ps = #|O|} : t
+    := zip ps (enum O).
   Local Open Scope ring_scope.
   Definition singletonOutcome (o : O) : t := nseq Nat.one ((1 : Number.t), o).
   Declare Scope lottery_scope.
   Delimit Scope lottery_scope with lottery.
   Notation "'.|' o '|'" := (singletonOutcome o) : lottery_scope.
-
-  Module DiscreteDistribution.
-    Parameter (O : finType).
-  End DiscreteDistribution.
 
   Parameter (o1 : O).
   Check {ffun O -> Number.unit_compact}.
@@ -50,7 +60,11 @@ Module Type Lottery (Number : Interval).
 
 End Lottery.
 
-Module Type Rationality (Number : Interval) (Lott : Lottery Number).
+Module Type Rationality
+  (Number : Interval)
+  (Dist : DiscreteDistribution Number)
+  (Lott : Lottery Number Dist)
+.
   Local Open Scope order_scope.
 
   Local Open Scope lottery_scope.
@@ -59,8 +73,3 @@ Module Type Rationality (Number : Interval) (Lott : Lottery Number).
       transitivity : forall (o1 o2 o3 : Lott.O), o1 <= o2 -> o2 <= o3 -> o1 <= o3;
     }.
 End Rationality.
-
-Module Utility (Conv : Interval) (Rat : Rationality Conv).
-  Definition
-
-End Utility.

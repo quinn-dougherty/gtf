@@ -21,6 +21,8 @@ depends: [
   "coq-mathcomp"
   "coq-mathcomp-analysis"
   "coq-paco"
+  "coq-itree"
+  "coq-ext-lib"
   "dune" {>= "3.0"}
 ]
 authors: [
