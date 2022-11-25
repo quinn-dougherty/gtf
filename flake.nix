@@ -15,7 +15,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, mach-nix, nix-doom-emacs, flake-utils }:
+  outputs =
+    { self, nixpkgs, nixpkgs-unstable, mach-nix, nix-doom-emacs, flake-utils }:
     let
       overlays = [ ];
       base-shell-inputs = pkgs:
@@ -33,11 +34,12 @@
           serapi
           pkgs.nodejs
         ];
-      python-environment = system: let
-        mach = mach-nix.lib.${system}.mkPython {
-          requirements = "alectryon==1.4.0";
-          ignoreDataOutdated = true;  # needed for some error
-        };
+      python-environment = system:
+        let
+          mach = mach-nix.lib.${system}.mkPython {
+            requirements = "alectryon==1.4.0";
+            ignoreDataOutdated = true; # needed for some error
+          };
         in [ mach ];
       base-shell = { pkgs, text-editor }:
         pkgs.mkShell {
@@ -48,7 +50,8 @@
             (python-environment pkgs.system)
           ];
         };
-      emacs-make = system: nix-doom-emacs.package.${system} { doomPrivateDir = ./nix/doom.d; };
+      emacs-make = system:
+        nix-doom-emacs.package.${system} { doomPrivateDir = ./nix/doom.d; };
       codium-make = pkgs:
         pkgs.vscode-with-extensions.override {
           vscode = pkgs.vscodium;

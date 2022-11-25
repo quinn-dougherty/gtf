@@ -107,6 +107,8 @@ Proof.
       assert (G0 : Nat.Even (2 * m')). { unfold Nat.Even. exists m'. reflexivity. }
       apply Nat.Odd_succ in G. rewrite contra in G.
       apply (Nat.Even_Odd_False (2 * m') G0 G).
+    + left. admit.
+    Admitted. (*
     + left.
       assert (G : Nat.Odd n). {
         unfold Nat.Odd. induction n.
@@ -114,4 +116,4 @@ Proof.
         * rewrite Nat.Even_succ in H. exfalso. apply H. apply IHn. intros contra. unfold Nat.Even in contra. destruct contra as [m' contra]. subst. apply H. unfold Nat.Odd. apply IHn. intros contra'.
       }
       rewrite Nat.Even_succ.
-      apply G.
+      apply G.*)

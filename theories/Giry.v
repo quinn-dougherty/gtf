@@ -79,12 +79,17 @@ Module Probability (Number : Interval).
     Context {X Y : Type} (E : @EV X) (E' : @EV Y).
     Context `{EVLaws (@EV X)} `{EVLaws (@EV Y)}.
 
-  Class Giry : Type := {
-      flatten : (@EV (@EV X)) -> (@EV X);
-      tensorialStrength : X * (@EV Y) -> @EV (X * Y);
-      semidirectProduct : (X -> @EV Y) -> @EV X -> @EV (X * Y);
-      fmap__giry : (X -> Y) -> @EV X -> @EV Y
-    }.
+    Definition flatten (eev : @EV (@EV X)) : @EV X := fun f => eev (fun mu => mu f).
+    Definition tensorialStrength (inp : X * (@EV Y)) : @EV (X * Y) := let x := fst inp in let v := snd inp in fun f => v (fun y => f (x, y)).
+    (* Definition semidirectProduct (f : X -> @EV Y) (x : @EV X) : @EV (X * Y) := fun f => x (fun mu => f mu (fun y => mu(x,y))). *)
+    Definition fmap__giry (f : X -> Y) (x : @EV X) : @EV Y.
+      Proof.
+        unfold EV, RV in *.
+        intros y.
+        apply x; intros f'.
+        apply y; apply f; apply f'.
+      Defined.
+
   End Giry.
 
 End Probability.

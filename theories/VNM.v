@@ -1,29 +1,18 @@
 (* https://en.wikipedia.org/wiki/Von_Neumann%E2%80%93Morgenstern_utility_theorem *)
+
+From Coq Require Streams.
+
 From Paco Require Import paco.
 From mathcomp Require Import classical_sets interval all_ssreflect all_algebra order.
 From mathcomp.analysis Require Import reals topology measure.
 Import Order.Theory.
 
-Module Type Interval.
-  Local Open Scope ring_scope.
-  Local Open Scope classical_set_scope.
-  Parameter (t : realType).
-  Definition unit_compact : Type := subspace `[0 : t, 1 : t].
-  Definition fin_unit_compact : Type := seq unit_compact.
-  Class convex (ps : fin_unit_compact) : Type := {
-      sums_to_one : foldr (@GRing.add t) (0 : t) ps = 1
-    }.
-  Definition unit_left_half_open : Type := subspace `]0 : t, 1 : t].
-  Definition unit_open : Type := subspace `]0 : t, 1 : t[.
-End Interval.
+From GTF Require Import Giry.
 
-Module Stream.
-  CoInductive t {A : Type} : Type := cons (x : A) (y : t) : t.
-  Definition hd {A : Type} (stream : t) : A := match stream with | cons x _ => x end.
-  Definition tl {A : Type} (stream : t) : @t A := match stream with | cons _ y => y end.
-  CoFixpoint map {A B : Type} (f : A -> B) (stream : @t A) : @t B
-    := match stream with | cons x y => cons (f x) (map f y) end.
-End Stream.
+Module VNM (Number : Interval).
+  Module P := Probability Number.
+  Import P.
+End VNM.
 
 Module Type DiscreteDistribution (Number : Interval).
 
