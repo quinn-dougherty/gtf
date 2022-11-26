@@ -1,0 +1,23 @@
+{
+  "name": "nash",
+  "version": "0.0.1",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "test",
+      "type": "dev"
+    }
+  ],
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "bs-dev-dependencies": ["rescript-fast-check", "rescript-mocha"],
+  "warnings": {
+    "error": "+101"
+  }
+}
