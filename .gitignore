@@ -4,5 +4,9 @@
 tmp/
 
 bibliography
-theories/.lia.cache
+.lia.cache
 _build
+
+node_modules
+nash/lib
+*.bs.js
