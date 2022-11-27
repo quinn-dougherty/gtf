@@ -4,27 +4,35 @@
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git://github.com/quinn-dougherty/rescript-parsec.git"
+    "url": "git://github.com/quinn-dougherty/gtf.git"
   },
   "scripts": {
-    "build": "rescript",
-    "clean": "rescript clean -with-deps",
+    "build:peggy": "peggy src/Parser.peggy",
+    "build": "peggy src/Parser.peggy && rescript",
+    "clean": "rm src/Parser.js && rescript clean -with-deps",
     "start": "rescript build -w",
-    "format": "rescript format -all",
+    "format": "prettier --write . && rescript format -all",
     "test": "mocha"
   },
   "mocha": {
     "recursive": true,
     "reporter": "progress",
-    "spec": ["test"]
+    "spec": [
+      "test"
+    ]
   },
-  "keywords": ["rescript", "game theory", "string diagrams"],
+  "keywords": [
+    "rescript",
+    "game theory",
+    "string diagrams"
+  ],
   "author": "Quinn Dougherty <quinnd@riseup.net>",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "rescript": "10.1.0-rc.5",
     "rescript-mocha": "^0.9.0",
-    "rescript-fast-check": "^1.1.1"
+    "rescript-fast-check": "^1.1.1",
+    "peggy": "^2.0.1"
   }
 }

@@ -68,19 +68,19 @@
           doom = emacs-make { system = pkgs.system; };
           vscodium = codium-make { inherit pkgs; };
         in flake-utils.lib.flattenTree {
-          default = base-shell {
+          coq-no-ui = base-shell {
             inherit pkgs;
             text-editor = [ ];
           };
-          just-emacs = base-shell {
+          emacs = base-shell {
             inherit pkgs;
             text-editor = [ doom ];
           };
-          just-codium = base-shell {
+          codium = base-shell {
             inherit pkgs;
             text-editor = [ vscodium ];
           };
-          both-editors = base-shell {
+          coq = base-shell {
             inherit pkgs;
             text-editor = [ doom vscodium ];
           };

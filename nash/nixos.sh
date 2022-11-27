@@ -6,7 +6,7 @@
 set -x
 
 fhsShellName="nash-fhs-development"
-fhsShellDotNix="{pkgs ? import <nixpkgs> {} }: (pkgs.buildFHSUserEnv { name = \"${fhsShellName}\"; targetPkgs = pkgs: [pkgs.yarn pkgs.glibc]; runScript = \"yarn\"; }).env"
+fhsShellDotNix="{pkgs ? import <nixpkgs> {} }: (pkgs.buildFHSUserEnv { name = \"${fhsShellName}\"; targetPkgs = pkgs: with pkgs; [nodePackages.npm]; runScript = \"npm install\"; }).env"
 nix-shell - <<<"$fhsShellDotNix"
 
 theLd=$(patchelf --print-interpreter $(which mkdir))

@@ -87,72 +87,79 @@ module TypeInference = {
   }
 
   let equal = (ctx: context, e1: Syntax.expr, e2: Syntax.expr): bool => {
-    let rec equal = (e1, e2): bool => switch (e1, e2) {
+    let rec equal = (e1, e2): bool =>
+      switch (e1, e2) {
       | (Syntax.Var(x1), Syntax.Var(x2)) => x1 == x2
       | (App(e11, e12), App(e21, e22)) => equal(e11, e21) && equal(e12, e22)
       | (Universe(k1), Universe(k2)) => k1 == k2
       | (Pi(a1), Pi(a2)) => equalAbstraction(a1, a2)
       | (Lambda(a1), Lambda(a2)) => equalAbstraction(a1, a2)
       | (_, _) => false
-    }
+      }
     and equalAbstraction = (a1: Syntax.abstraction, a2: Syntax.abstraction): bool =>
-        equal(a1.itsType, a2.itsType) && equal(a1.body, (Syntax.subst(list{(a2.variable, a1.variable->Var)}, a2.body)))
+      equal(a1.itsType, a2.itsType) &&
+      equal(a1.body, Syntax.subst(list{(a2.variable, a1.variable->Var)}, a2.body))
     equal(normalize(ctx, e1), normalize(ctx, e2))
   }
 
   let rec inferType = (ctx: context, e: Syntax.expr): option<Syntax.expr> => {
     switch e {
-      | Var(x) => lookupTy(x, ctx)
-      | Universe(k) => Universe(k+1) -> Some
-      | Pi(a) => {
+    | Var(x) => lookupTy(x, ctx)
+    | Universe(k) => Universe(k + 1)->Some
+    | Pi(a) => {
         let k1 = inferUniverse(ctx, a.itsType)
         let k2 = inferUniverse(ctx, a.body)
         switch (k1, k2) {
-          | (Some(k1'), Some(k2')) => Js.Math.max_int(k1', k2') -> Universe -> Some
-          | _ => None
+        | (Some(k1'), Some(k2')) => Js.Math.max_int(k1', k2')->Universe->Some
+        | _ => None
         }
       }
-      | Lambda(a) => {
+
+    | Lambda(a) => {
         let _ = inferUniverse(ctx, a.itsType)
         let te = inferType(extend(a.variable, a.itsType, ctx), a.body)
         switch te {
-          | None => None
-          | Some(te') => {variable: a.variable, itsType: a.itsType, body: te'} -> Pi -> Some
+        | None => None
+        | Some(te') => {variable: a.variable, itsType: a.itsType, body: te'}->Pi->Some
         }
       }
-      | App(e1, e2) => {
+
+    | App(e1, e2) => {
         open Syntax
         let a = inferPi(ctx, e1)
         let te = inferType(ctx, e2)
         switch (a, te) {
-          | (Some(a'), Some(te')) => if equal(ctx, a'.itsType, te') {
-                subst(list{(a'.variable, e2)}, a'.body) -> Some
-            } else {
-                None
-            }
-          | _ => None
+        | (Some(a'), Some(te')) =>
+          if equal(ctx, a'.itsType, te') {
+            subst(list{(a'.variable, e2)}, a'.body)->Some
+          } else {
+            None
+          }
+        | _ => None
         }
       }
     }
   }
-  and let inferUniverse = (ctx: context, t: Syntax.expr): option<int> => {
+  and inferUniverse = (ctx: context, t: Syntax.expr): option<int> => {
     let u = inferType(ctx, t)
     switch u {
-      | Some(u') => switch normalize(ctx, u') {
-          | Universe(k) => k -> Some
-          | _ => None
-      }
+    | Some(u') =>
+      switch normalize(ctx, u') {
+      | Universe(k) => k->Some
       | _ => None
+      }
+    | _ => None
     }
   }
-  and let inferPi = (ctx: context, e: Syntax.expr): option<Syntax.abstraction> => {
+  and inferPi = (ctx: context, e: Syntax.expr): option<Syntax.abstraction> => {
     let t = inferType(ctx, e)
     switch t {
-      | Some(t') => switch normalize(ctx, t') {
-          | Pi(a) => a -> Some
-          | _ => None
+    | Some(t') =>
+      switch normalize(ctx, t') {
+      | Pi(a) => a->Some
+      | _ => None
       }
-      | None => None
+    | None => None
     }
   }
 }
