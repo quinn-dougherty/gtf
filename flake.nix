@@ -90,7 +90,7 @@
           default = pkgs.stdenv.mkDerivation {
             name = "gametheory-foundations-compile";
             buildInputs = base-shell-inputs pkgs;
-            src = ./.;
+            src = ./game-theory;
             buildPhase = ''
               dune build
             '';
@@ -133,7 +133,7 @@
           ciSystems = [ hci-system ];
           onPush = {
             texteditors.outputs = hci-shells;
-            gtf.outputs = hci-builds;
+            game-theory.outputs = hci-builds;
             lint.outputs = hci-checks;
           };
         };

@@ -5,7 +5,7 @@
 # We need to patchelf rescript executables. https://github.com/NixOS/nixpkgs/issues/107375
 set -x
 
-fhsShellName="nash-fhs-development"
+fhsShellName="nashwires-fhs-development"
 fhsShellDotNix="{pkgs ? import <nixpkgs> {} }: (pkgs.buildFHSUserEnv { name = \"${fhsShellName}\"; targetPkgs = pkgs: with pkgs; [nodePackages.npm]; runScript = \"npm install\"; }).env"
 nix-shell - <<<"$fhsShellDotNix"
 

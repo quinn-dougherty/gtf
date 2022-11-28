@@ -1,5 +1,5 @@
 {
-  "name": "nash",
+  "name": "nashwires",
   "description": "graphical proof assistant for open games",
   "version": "0.0.1",
   "repository": {
@@ -17,15 +17,9 @@
   "mocha": {
     "recursive": true,
     "reporter": "progress",
-    "spec": [
-      "test"
-    ]
+    "spec": ["test"]
   },
-  "keywords": [
-    "rescript",
-    "game theory",
-    "string diagrams"
-  ],
+  "keywords": ["rescript", "game theory", "string diagrams"],
   "author": "Quinn Dougherty <quinnd@riseup.net>",
   "license": "MIT",
   "dependencies": {},

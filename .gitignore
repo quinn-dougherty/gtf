@@ -8,6 +8,6 @@ bibliography
 _build
 
 node_modules
-nash/lib
+nashwires/lib
 *.bs.js
 Parser.js
