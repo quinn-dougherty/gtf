@@ -12,14 +12,8 @@ let
     mathcomp-analysis
     # For website
     serapi
-    pkgs.nodejs
+    pkgs.nodejs-14_x
   ];
-  #  python-environment = let
-  #    mach = mach-nix.lib.${pkgs.system}.mkPython {
-  #      requirements = "alectryon==1.4.0";
-  #      # ignoreDataOutdated = true; # needed for some error
-  #    };
-  #  in [ mach ];
   python = [ pkgs.python310Packages.alectryon ];
 in pkgs.mkShell {
   name = "game-theory-development";

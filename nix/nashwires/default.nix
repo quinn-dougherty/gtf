@@ -6,13 +6,12 @@
     in {
       packages.nashwires = pkgs.stdenv.mkDerivation {
         name = "nashwires-compile-test";
-        src = ../nashwires;
-        buildInputs = [ pkgs.nodejs ];
+        src = ./../../nashwires;
+        buildInputs = [ pkgs.nodejs-14_x ];
         buildPhase = ''
           ln -s ${nodeDependencies}/lib/node_modules ./node_modules
           export PATH="${nodeDependencies}/bin:$PATH"
 
-          # Build the distribution bundle in "dist"
           npm run build
           npm run test
         '';

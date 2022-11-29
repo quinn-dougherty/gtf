@@ -2,4 +2,4 @@
 
 # Must be ran from `cd ./nix/nashwires`
 
-node2nix -i ../../nashwires/package.json -l ../../nashwires/package-lock.json -18 -c ./npm.nix
+node2nix --development --input ../../nashwires/package.json --lock ../../nashwires/package-lock.json --composition ./npm.nix
