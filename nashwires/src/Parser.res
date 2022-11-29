@@ -63,25 +63,3 @@ and makeAbstraction = (a: nodeAbs): option<Stx.abstraction> => {
   | _ => None
   }
 }
-
-// TESTS
-let dummyString = "dummysource"
-let smoketest0 = "TY1"
-let smoketest1 = "ForAll x45k1 : TY4 . x45k1"
-let smoketest2 = "func x1 : (ForAll x2 : TY1 . x2) . x1"
-let smoketest3 = "func x1 : TY1 . x1"
-switch smoketest0->parse(dummyString) {
-| Ok(p) => Js.log(p)
-| Error(e) => Js.log(e)
-}
-
-// (smoketest1->parse(dummyString))->Js.log
-switch smoketest1->parse(dummyString) {
-| Ok(p) => Js.log(p->makeExpression)
-| Error(e) => Js.log(e)
-}
-
-switch smoketest3->parse(dummyString) {
-| Ok(p) => Js.log(p)
-| Error(e) => Js.log(e)
-}
