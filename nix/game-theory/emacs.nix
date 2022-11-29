@@ -1,2 +1,2 @@
 { pkgs, nix-doom-emacs }:
-nix-doom-emacs.override { doomPrivateDir = ./../doom.d; }
+nix-doom-emacs.package.${pkgs.system} { doomPrivateDir = ./../doom.d; }

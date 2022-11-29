@@ -1,8 +1,8 @@
-{ self, ... }: {
+{ self, inputs, ... }: {
   perSystem = { config, self', inputs', pkgs, ... }:
-    with inputs';
     let
-      doom-emacs = import ./emacs.nix { inherit pkgs nix-doom-emacs; };
+      doom-emacs = with inputs;
+        import ./emacs.nix { inherit pkgs nix-doom-emacs; };
       vscodium = import ./codium.nix { inherit pkgs; };
       shell = { text-editor ? [ ] }:
         import ./shell.nix { inherit pkgs text-editor; };
