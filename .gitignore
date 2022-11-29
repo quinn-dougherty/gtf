@@ -11,3 +11,4 @@ node_modules
 nashwires/lib
 *.bs.js
 Parser.js
+result
