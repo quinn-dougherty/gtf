@@ -19,5 +19,9 @@ Idk how much time I'll be putting into this. I'm just figuring out what abstract
 
 # Package: `nashwires`
 
-- Goal: a graphical proof assistant for open games
+- Goal: a graphical proof assistant for open games.
 - Goal: react code for wiring/string diagram editing.
+
+# Package: `comms`
+
+- Goal: communicate about this project; blogs, talks, papers.

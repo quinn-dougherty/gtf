@@ -1,21 +1,20 @@
 { pkgs, text-editor }:
 let
-  base-shell-inputs = with pkgs.coqPackages; [
-    # To build
+  for-coq = with pkgs.coqPackages; [
     pkgs.ocaml
     pkgs.dune_3
     coq
-    # Coq dependencies
     paco
     ITree
     mathcomp
     mathcomp-analysis
-    # For website
-    serapi
-    pkgs.nodejs-14_x
   ];
-  python = [ pkgs.python310Packages.alectryon ];
+  for-web = with pkgs; [
+    nodejs
+    coqPackages.serapi
+    python310Packages.alectryon
+  ];
 in pkgs.mkShell {
   name = "game-theory-development";
-  buildInputs = builtins.concatLists [ base-shell-inputs text-editor python ];
+  buildInputs = builtins.concatLists [ for-coq text-editor for-web ];
 }

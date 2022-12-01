@@ -12,3 +12,5 @@ nashwires/lib
 *.bs.js
 Parser.js
 result
+.envrc
+.direnv

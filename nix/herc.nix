@@ -1,4 +1,4 @@
-{ withSystem, self, ... }:
+{ self, ... }:
 let hciSystem = "x86_64-linux";
 in {
   flake.herculesCI = {
