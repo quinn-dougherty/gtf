@@ -1,7 +1,7 @@
 { self, withSystem, ... }:
 let hciSystem = "x86_64-linux";
 in {
-  flake = withSystem hciSystem ({ config, effects, pkgs, inputs', ... }: {
+  herculesCI = withSystem hciSystem ({ config, effects, pkgs, inputs', ... }: {
     ciSystems = [ hciSystem ];
     onPush = let packages = self.packages.${hciSystem};
     in {
