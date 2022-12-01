@@ -8,12 +8,23 @@
       url = "github:nix-community/nix-doom-emacs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hercules-ci-effects = {
+      url = "github:hercules-ci/hercules-ci-effects";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, flake-parts, nix-doom-emacs }@inputs:
+  outputs =
+    { self, nixpkgs, flake-parts, nix-doom-emacs, hercules-ci-effects }@inputs:
     flake-parts.lib.mkFlake { inherit (inputs) self; } {
-      imports =
-        [ ./nix/nashwires ./nix/game-theory ./nix/herc.nix ./nix/common.nix ];
+      imports = [
+        hercules-ci-effects.flakeModule
+        ./nix/nashwires
+        ./nix/game-theory
+        ./nix/comms
+        ./nix/herc.nix
+        ./nix/common.nix
+      ];
       systems =
         [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
     };

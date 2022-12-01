@@ -5,8 +5,11 @@
     devShells.default = with pkgs;
       mkShell {
         name = "gtf-development";
-        buildInputs = [ node2nix nixfmt nodePackages.prettier ]
-          ++ self'.devShells.coq-no-ui.buildInputs;
+        buildInputs = builtins.concatLists [
+          [ node2nix nixfmt nodePackages.prettier ]
+          self'.devShells.coq-no-ui.buildInputs
+          self'.devShells.pandoc.buildInputs
+        ];
       };
     checks.lint = pkgs.stdenv.mkDerivation {
       name = "gtf-lint";
