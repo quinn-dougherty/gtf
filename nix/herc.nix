@@ -28,14 +28,13 @@ in {
         };
     in {
       ciSystems = [ hciSystem ];
-      onPush = {
+      onPush = { branch, ... }: {
         checks.outputs = self.checks.${hciSystem}.lint;
         coq-game-theory.outputs = packages.coq-game-theory;
         nashwires.outputs = packages.nashwires;
         development.outputs = self.devShells.${hciSystem};
-        comms.outputs.effects = { branch, ... }:
-          documentEffectForAll branch comms-documents;
-        soupault.outputs.effects = { branch, ... }: soupaultDeploy branch;
+        comms.outputs.effects = documentEffectForAll branch comms-documents;
+        soupault.outputs.effects = soupaultDeploy branch;
       };
     });
 }
