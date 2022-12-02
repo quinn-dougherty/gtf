@@ -14,3 +14,8 @@ Parser.js
 result
 .envrc
 .direnv
+soupault/build
+game-theory/theories/*.v.html
+game-theory/theories/alectryon.css
+game-theory/theories/alectryon.js
+game-theory/theories/pygments.css

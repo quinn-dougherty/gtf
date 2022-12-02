@@ -12,13 +12,18 @@
       url = "github:hercules-ci/hercules-ci-effects";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zola-theme = {
+      url = "github:RatanShreshtha/DeepThought";
+      flake = false;
+    };
   };
 
-  outputs =
-    { self, nixpkgs, flake-parts, nix-doom-emacs, hercules-ci-effects }@inputs:
+  outputs = { self, nixpkgs, flake-parts, nix-doom-emacs, hercules-ci-effects
+    , zola-theme }@inputs:
     flake-parts.lib.mkFlake { inherit (inputs) self; } {
       imports = [
         hercules-ci-effects.flakeModule
+        # ./nix/zola
         ./nix/nashwires
         ./nix/game-theory
         ./nix/comms
@@ -27,5 +32,12 @@
       ];
       systems =
         [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
+      hercules-ci.flake-update = {
+        enable = true;
+        when = {
+          hour = [ 23 ];
+          dayOfWeek = [ "Sat" ];
+        };
+      };
     };
 }
