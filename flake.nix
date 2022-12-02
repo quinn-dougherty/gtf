@@ -12,18 +12,13 @@
       url = "github:hercules-ci/hercules-ci-effects";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zola-theme = {
-      url = "github:RatanShreshtha/DeepThought";
-      flake = false;
-    };
   };
 
-  outputs = { self, nixpkgs, flake-parts, nix-doom-emacs, hercules-ci-effects
-    , zola-theme }@inputs:
+  outputs =
+    { self, nixpkgs, flake-parts, nix-doom-emacs, hercules-ci-effects }@inputs:
     flake-parts.lib.mkFlake { inherit (inputs) self; } {
       imports = [
         hercules-ci-effects.flakeModule
-        # ./nix/zola
         ./nix/nashwires
         ./nix/game-theory
         ./nix/comms

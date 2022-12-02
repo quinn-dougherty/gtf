@@ -25,3 +25,7 @@ Idk how much time I'll be putting into this. I'm just figuring out what abstract
 # Package: `comms`
 
 - Goal: communicate about this project; blogs, talks, papers.
+
+# Package: `soupault`
+
+- Goal: present this work with the `soupault` static site generator.

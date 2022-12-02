@@ -1,1 +1,7 @@
-Just trying to see if I want to make the website with `soupault`.
+# Website
+
+Needs `alectryon` to be installed (which depends on `coq-serapi`)
+
+```sh
+soupault
+```

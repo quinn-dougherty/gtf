@@ -598,8 +598,7 @@
         "flake-parts": "flake-parts",
         "hercules-ci-effects": "hercules-ci-effects",
         "nix-doom-emacs": "nix-doom-emacs",
-        "nixpkgs": "nixpkgs_2",
-        "zola-theme": "zola-theme"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "rotate-text": {
@@ -663,22 +662,6 @@
       "original": {
         "owner": "hlissner",
         "repo": "ws-butler",
-        "type": "github"
-      }
-    },
-    "zola-theme": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1668063292,
-        "narHash": "sha256-6BELdj7FlDYKBmZ3i21p8B1mgLTV8AKvb9a8zkREzeA=",
-        "owner": "RatanShreshtha",
-        "repo": "DeepThought",
-        "rev": "9f567c3f005a1ea3b58d389566f18890284c71df",
-        "type": "github"
-      },
-      "original": {
-        "owner": "RatanShreshtha",
-        "repo": "DeepThought",
         "type": "github"
       }
     }
