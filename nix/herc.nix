@@ -6,7 +6,7 @@ let
 in {
   herculesCI = withSystem hciSystem ({ hci-effects, config, ... }:
     let
-      run-condition = config.repo.branch == "main";
+      run-condition = config.herculesCI.repo.branch == "main";
       documentEffectForAll = let
         documentEffectFor = document: {
           name = document;
