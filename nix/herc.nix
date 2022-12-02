@@ -17,7 +17,7 @@ in {
         };
       in {
         documentEffectForAll = documents:
-          builtins.listToAttrs (map self.documentEffectFor documents);
+          builtins.listToAttrs (map documentEffectFor documents);
       };
     in {
       ciSystems = [ hciSystem ];
