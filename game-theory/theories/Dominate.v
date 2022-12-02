@@ -1,9 +1,9 @@
 From Coq Require Import Reals Lra Relations ssreflect ssrbool.
 
-(** Game theory with agents who like to gain something called utility.
+(*| Game theory with agents who like to gain something called utility.
 
 We will accumulate properties of this "utility" thing over time. To begin, we only need the structure of a decidable ordering relation.
- *)
+|*)
 
 Module Type decType.
   Parameter T : Type.
@@ -38,7 +38,7 @@ Module TwoByTwo (M : decType).
 
 End TwoByTwo.
 
-(* Real numbers *)
+(*| Real numbers |*)
 
 Module RgeDec : decType.
   Definition T := R.

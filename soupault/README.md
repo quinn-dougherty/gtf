@@ -1,7 +1,6 @@
-# Website
-
-Needs `alectryon` to be installed (which depends on `coq-serapi`)
+# Game theory foundations website
 
 ```sh
-soupault
+nix build .#soupault
+python -m http.server --directory result
 ```

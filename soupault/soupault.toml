@@ -53,7 +53,7 @@
   #
   # Setting this option to false switches it to the "HTML processor" mode
   # when it considers every file in site/ a complete page and only runs it through widgets/plugins.
-  generator_mode = true
+  generator_mode = false
 
   # Files that contain an <html> element are considered complete pages rather than page bodies,
   # even in the "website generator" mode.
@@ -96,8 +96,8 @@
 # that converts it to HTML and writes it to standard output.
 # Example:
 [preprocessors]
-  md = "pandoc -f commonmark+smart -t html"
-  v = "alectryon -R site/theories GTF --frontend coq --backend webpage"
+  md = "pandoc -f markdown -t html"
+  v = "alectryon -R site/theories GTF --frontend coq+rst --backend webpage"
 
 # Pages can be further processed with "widgets"
 
@@ -127,18 +127,3 @@
   # By default this widget deletes all elements matching the selector,
   # but you can set this option to false to delete just the first one
   delete_all = true
-
-[index]
-  index = true
-
-  sort_descending = true
-
-[index.fields.title]
-  selector = ["title"]
-
-[index.views.theories]
-  index_selector = "#theories-index"
-  index_item_template = """
-    <h2><a href="{{url}}">{{title}}</a></h2>
-    <a href="{{url}}">Read more</a>
-  """

@@ -9,12 +9,12 @@
       ];
     in {
       devShells.soupault = pkgs.mkShell {
-        name = "game-theory-soupault-development";
+        name = "gtf-soupault-development";
         buildInputs = soupault-inputs ++ self'.devShells.coq-no-ui.buildInputs;
       };
       packages.soupault = pkgs.stdenv.mkDerivation {
         name = "gtf-soupault";
-        buildInputs = self'.devShells.coq-no-ui.buildInputs ++ soupault-inputs;
+        buildInputs = soupault-inputs ++ self'.devShells.coq-no-ui.buildInputs;
         src = ./../../soupault;
         configurePhase = ''
           cp -r ${coq-gt}/default/theories site

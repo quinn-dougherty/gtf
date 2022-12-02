@@ -18,7 +18,7 @@ Module Type Interval.
   Definition unit_open : Type := subspace `]0 : t, 1 : t[.
 End Interval.
 
-(** A probability distribution knows how to turn a random variable (a value assignment) to an expected value. *)
+(*| A probability distribution knows how to turn a random variable (a value assignment) to an expected value. |*)
 Module Probability (Number : Interval).
 
   Local Open Scope ring_scope.
@@ -50,7 +50,7 @@ Module Probability (Number : Interval).
 
   End Expectation.
 
-  (* Expected value is a monad. *)
+  (*| Expected value is a monad. |*)
   #[export] Instance EVMonad : Monad (@EV).
   Proof.
     constructor.
@@ -67,7 +67,7 @@ Module Probability (Number : Interval).
       apply mx.
   Defined.
 
-  (* Correctness of monad proof. *)
+  (*| Correctness of monad proof. |*)
   #[export] Instance EVLawfulMonad : MonadLaws EVMonad.
   Proof.
     constructor; intros; unfold bind, ret, EVMonad, swap; reflexivity.
