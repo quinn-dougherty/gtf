@@ -31,7 +31,7 @@
         enable = true;
         when = {
           hour = [ 23 ];
-          dayOfWeek = [ "Sat" ];
+          dayOfWeek = "Sat";
         };
       };
     };
