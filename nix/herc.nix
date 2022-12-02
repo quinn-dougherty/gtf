@@ -18,6 +18,13 @@ in {
       in {
         documentEffectForAll = documents:
           builtins.listToAttrs (map documentEffectFor documents);
+        soupaultDeploy = branch:
+          hci-effects.netlifyDeploy {
+            content = packages.soupault;
+            productionDeployment = (branch == "main");
+            secretName = "netlify";
+            siteId = "9d17ad40-c2f8-4933-b7d8-bb0ac30f0907";
+          };
       };
     in {
       ciSystems = [ hciSystem ];
@@ -27,6 +34,7 @@ in {
         nashwires.outputs = packages.nashwires;
         development.outputs = self.devShells.${hciSystem};
         comms.outputs.effects = util.documentEffectForAll comms-documents;
+        soupault.outputs.effects = util.soupaultDeploy;
       };
     });
 }

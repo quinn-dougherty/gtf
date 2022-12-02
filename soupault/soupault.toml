@@ -34,7 +34,7 @@
   # By default, soupault uses "clean ULRs",
   # that is, $site_dir/page.html is converted to $build_dir/page/index.html
   # You can make it produce $build_dir/page.tml instead by changing this option to false
-  clean_urls = true
+  clean_urls = false
 
   # If you set clean_urls=false,
   # file names with ".html" and ".htm" extensions are left unchanged.
@@ -97,7 +97,7 @@
 # Example:
 [preprocessors]
   md = "pandoc -f commonmark+smart -t html"
-  v = "alectryon -R ../game-theory/_build/default/theories GTF --frontend coq --backend webpage"
+  v = "alectryon -R site/theories GTF --frontend coq --backend webpage"
 
 # Pages can be further processed with "widgets"
 
@@ -105,8 +105,8 @@
 [widgets.page-title]
   widget = "title"
   selector = "h1"
-  default = "My Homepage"
-  append = " &mdash; My Homepage"
+  default = "Game theory foundations"
+  append = " &mdash; Game theory foundations"
 
   # Insert a <title> in a page if it doesn't have one already.
   # By default soupault assumes if it's missing, you don't want it.

@@ -9,7 +9,7 @@
           [ node2nix nixfmt nodePackages.prettier ]
           self'.devShells.coq.buildInputs
           self'.devShells.pandoc.buildInputs
-          [ soupault ]
+          self'.devShells.soupault.buildInputs
         ];
       };
     checks.lint = pkgs.stdenv.mkDerivation {

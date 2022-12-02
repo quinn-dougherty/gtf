@@ -14,7 +14,7 @@
         coq = shell { text-editor = [ doom-emacs vscodium ]; };
       };
       packages.coq-game-theory = pkgs.stdenv.mkDerivation {
-        name = "game-theory-compile";
+        name = "coq-game-theory-compile";
         buildInputs = (shell { }).buildInputs;
         src = ./../../game-theory;
         buildPhase = "dune build";

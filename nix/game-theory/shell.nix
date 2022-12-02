@@ -1,6 +1,6 @@
 { pkgs, text-editor }:
 let
-  for-coq = with pkgs.coqPackages; [
+  coq-packages = with pkgs.coqPackages; [
     pkgs.ocaml
     pkgs.dune_3
     coq
@@ -8,13 +8,9 @@ let
     ITree
     mathcomp
     mathcomp-analysis
-  ];
-  for-web = with pkgs; [
-    nodejs
-    coqPackages.serapi
-    python310Packages.alectryon
+    serapi
   ];
 in pkgs.mkShell {
   name = "game-theory-development";
-  buildInputs = builtins.concatLists [ for-coq text-editor for-web ];
+  buildInputs = coq-packages ++ text-editor;
 }

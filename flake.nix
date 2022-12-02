@@ -19,6 +19,7 @@
     flake-parts.lib.mkFlake { inherit (inputs) self; } {
       imports = [
         hercules-ci-effects.flakeModule
+        ./nix/soupault
         ./nix/nashwires
         ./nix/game-theory
         ./nix/comms
@@ -29,7 +30,7 @@
         [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
       hercules-ci.flake-update = {
         enable = true;
-        when.dayOfWeek = [ "Sun" "Wed" ];
+        when.dayOfWeek = [ "Thu" ];
       };
     };
 }

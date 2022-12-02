@@ -12,20 +12,20 @@ The name is inspired by the mighty executable textbook volumes known as Software
 
 Idk how much time I'll be putting into this. I'm just figuring out what abstractions and libraries I want to use.
 
-# Package: `game-theory`
+## Package: `game-theory`
 
 - Goal: a `coq` library for game theory.
 - Goal: annotate it to be a textbook and add exercises.
 
-# Package: `nashwires`
+## Package: `nashwires`
 
 - Goal: a graphical proof assistant for open games.
 - Goal: react code for wiring/string diagram editing.
 
-# Package: `comms`
+## Package: `comms`
 
 - Goal: communicate about this project; blogs, talks, papers.
 
-# Package: `soupault`
+## Package: `soupault`
 
 - Goal: present this work with the `soupault` static site generator.
