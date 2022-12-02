@@ -6,7 +6,7 @@
       mkShell {
         name = "gtf-development";
         buildInputs = builtins.concatLists [
-          [ node2nix nixfmt nodePackages.prettier ]
+          [ nodejs-14_x node2nix nixfmt nodePackages.prettier ]
           self'.devShells.coq.buildInputs
           self'.devShells.pandoc.buildInputs
           self'.devShells.soupault.buildInputs

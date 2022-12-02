@@ -18,9 +18,15 @@
   "mocha": {
     "recursive": true,
     "reporter": "progress",
-    "spec": ["test"]
+    "spec": [
+      "test"
+    ]
   },
-  "keywords": ["rescript", "game theory", "string diagrams"],
+  "keywords": [
+    "rescript",
+    "game theory",
+    "string diagrams"
+  ],
   "author": "Quinn Dougherty <quinnd@riseup.net>",
   "license": "MIT",
   "dependencies": {},
