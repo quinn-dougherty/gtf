@@ -29,7 +29,7 @@
         [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
       hercules-ci.flake-update = {
         enable = true;
-        when.dayOfWeek = [ "Fri" ];
+        when.dayOfWeek = [ "Sun" "Wed" ];
       };
     };
 }
