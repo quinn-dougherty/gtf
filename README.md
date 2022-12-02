@@ -28,4 +28,5 @@ Idk how much time I'll be putting into this. I'm just figuring out what abstract
 
 ## Package: `soupault`
 
-- Goal: present this work with the `soupault` static site generator.
+- https://game-theory-foundations.netlify.app
+- contains `alectryon`ification of `game-theory` package.

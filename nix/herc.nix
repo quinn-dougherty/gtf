@@ -27,7 +27,7 @@ in {
       in {
         ciSystems = [ hciSystem ];
         onPush = {
-          # default.enable = false;
+          # default.enable = false; # odd that this isn't working; https://flake.parts/options/hercules-ci-effects.html#opt-herculesCI.onPush
           checks.outputs = self.checks.${hciSystem}.lint;
           coq-game-theory.outputs = packages.coq-game-theory;
           nashwires.outputs = packages.nashwires;
