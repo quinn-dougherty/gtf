@@ -1,4 +1,8 @@
-{ ... }: {
+{ lib, ... }:
+let
+  comms-documents =
+    (import ./../lib.nix { inherit lib; }).dirNames ./../../comms;
+in {
   perSystem = { config, self', inputs', pkgs, ... }:
     let
       tex-pkgs = with pkgs; [
@@ -7,29 +11,15 @@
           inherit (texlive) scheme-small thmtools datetime xpatch fmtcount;
         })
       ];
+      util = import ./util.nix {
+        inherit tex-pkgs;
+        mkDerivation = pkgs.stdenv.mkDerivation;
+      };
     in {
       devShells.pandoc = pkgs.mkShell {
         name = "comms-development";
         buildInputs = tex-pkgs;
       };
-      packages = {
-        agent-signature = pkgs.stdenv.mkDerivation {
-          name = "riffing on the agent type";
-          buildInputs = tex-pkgs;
-          src = ./../../comms/agency-signature;
-          buildPhase = ''
-            pandoc \
-              --from markdown+citations \
-              --to latex \
-              --out main.pdf \
-              --pdf-engine xelatex \
-              main.md
-          '';
-          installPhase = ''
-            mkdir -p $out
-            cp main.pdf $out/agent-signature.pdf
-          '';
-        };
-      };
+      packages = util.documentForAll comms-documents;
     };
 }
