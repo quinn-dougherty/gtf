@@ -30,7 +30,7 @@
       hercules-ci.flake-update = {
         enable = true;
         when = {
-          hour = [ 23 ];
+          hour = 23;
           dayOfWeek = "Sat";
         };
       };
