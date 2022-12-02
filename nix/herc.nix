@@ -2,7 +2,7 @@
 let
   hciSystem = "x86_64-linux";
   packages = self.packages.${hciSystem};
-  comms-documents = (import ./lib.nix { inherit lib; }).dirNames ./../../comms;
+  comms-documents = (import ./lib.nix { inherit lib; }).dirNames ./../comms;
 in {
   herculesCI = withSystem hciSystem ({ hci-effects, ... }:
     let
