@@ -4,7 +4,7 @@ let
   packages = self.packages.${hciSystem};
   comms-documents = (import ./lib.nix { inherit lib; }).dirNames ./../comms;
 in {
-  herculesCI = withSystem hciSystem ({ hci-effects, branch, ... }:
+  herculesCI = withSystem hciSystem ({ hci-effects, ... }:
     let
       run-condition = branch: branch == "main";
       documentEffectForAll = branch:
@@ -26,7 +26,7 @@ in {
           secretName = "default-netlify";
           siteId = "b982a29f-501a-43ac-8702-3800e8e22cf5";
         };
-    in {
+    in { branch, ... }: {
       ciSystems = [ hciSystem ];
       onPush = {
         checks.outputs = self.checks.${hciSystem}.lint;
