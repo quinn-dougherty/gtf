@@ -4,7 +4,7 @@ let
   packages = self.packages.${hciSystem};
   comms-documents = (import ./lib.nix { inherit lib; }).dirNames ./../comms;
 in {
-  herculesCI = hercInputs:
+  herculesCI = { ... }@hercInputs:
     withSystem hciSystem ({ hci-effects, ... }:
       let
         run-condition = hercInputs.branch == "main";
