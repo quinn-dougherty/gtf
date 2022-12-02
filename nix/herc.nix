@@ -1,10 +1,10 @@
-{ self, withSystem, lib, branch, ... }:
+{ self, withSystem, lib, ... }:
 let
   hciSystem = "x86_64-linux";
   packages = self.packages.${hciSystem};
   comms-documents = (import ./lib.nix { inherit lib; }).dirNames ./../comms;
 in {
-  herculesCI = withSystem hciSystem ({ hci-effects, ... }:
+  herculesCI = withSystem hciSystem ({ hci-effects, branch, ... }:
     let
       run-condition = branch: branch == "main";
       documentEffectForAll = branch:
