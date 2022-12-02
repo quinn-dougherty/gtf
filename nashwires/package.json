@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build:peggy": "peggy src/Parser.peggy",
+    "build:rescript": "rescript",
     "build": "peggy src/Parser.peggy && rescript",
     "clean": "rm src/Parser.js && rescript clean -with-deps",
     "start": "rescript build -w",
@@ -17,15 +18,9 @@
   "mocha": {
     "recursive": true,
     "reporter": "progress",
-    "spec": [
-      "test"
-    ]
+    "spec": ["test"]
   },
-  "keywords": [
-    "rescript",
-    "game theory",
-    "string diagrams"
-  ],
+  "keywords": ["rescript", "game theory", "string diagrams"],
   "author": "Quinn Dougherty <quinnd@riseup.net>",
   "license": "MIT",
   "dependencies": {},
