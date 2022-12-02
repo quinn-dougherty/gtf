@@ -1,4 +1,4 @@
-{ self, withSystem, lib, ... }:
+{ self, withSystem, lib, branch, ... }:
 let
   hciSystem = "x86_64-linux";
   packages = self.packages.${hciSystem};
@@ -28,7 +28,7 @@ in {
         };
     in {
       ciSystems = [ hciSystem ];
-      onPush = { branch, ... }: {
+      onPush = {
         checks.outputs = self.checks.${hciSystem}.lint;
         coq-game-theory.outputs = packages.coq-game-theory;
         nashwires.outputs = packages.nashwires;
