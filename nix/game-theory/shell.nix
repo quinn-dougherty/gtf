@@ -11,6 +11,6 @@ let
     serapi
   ];
 in pkgs.mkShell {
-  name = "game-theory-development";
+  name = "coq-game-theory-development";
   buildInputs = coq-packages ++ text-editor;
 }

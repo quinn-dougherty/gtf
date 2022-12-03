@@ -1,41 +1,23 @@
 {
   "name": "nashwires",
-  "description": "graphical proof assistant for open games",
-  "version": "0.0.1",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/quinn-dougherty/gtf.git"
-  },
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build:peggy": "peggy src/Parser.peggy",
-    "build:rescript": "rescript",
-    "build:rescript:withdeps": "rescript build -with-deps",
-    "build": "peggy src/Parser.peggy && rescript",
-    "clean": "rm src/Parser.js && rescript clean -with-deps",
-    "start": "rescript build -w",
-    "format": "prettier --write . && rescript format -all",
-    "test": "mocha"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "mocha": {
-    "recursive": true,
-    "reporter": "spec",
-    "spec": [
-      "spec"
-    ]
-  },
-  "keywords": [
-    "rescript",
-    "game theory",
-    "string diagrams"
-  ],
-  "author": "Quinn Dougherty <quinnd@riseup.net>",
-  "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "rescript": "^10.1.0",
-    "rescript-mocha": "^0.9.0",
-    "rescript-fast-check": "^1.1.1",
-    "peggy": "^2.0.1",
-    "prettier": "^2.8.0"
+  "dependencies": {
+    "@projectstorm/react-diagrams": "^6.7.4",
+    "@types/node": "18.11.10",
+    "@types/react": "18.0.26",
+    "@types/react-dom": "18.0.9",
+    "eslint": "8.29.0",
+    "eslint-config-next": "13.0.6",
+    "next": "13.0.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "4.9.3"
   }
 }

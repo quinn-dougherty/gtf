@@ -9,22 +9,19 @@
       }).nodeDependencies;
     in {
       packages.nashwires = pkgs.stdenv.mkDerivation {
-        name = "nashwires-compile-test";
+        name = "nashwires-build";
         src = ./../../nashwires;
         buildInputs = [ nodejs14 ];
         configurePhase = ''
           cp -r ${nodeDependencies}/lib/node_modules .
           export PATH="${nodeDependencies}/bin:$PATH"
-          chmod -R +w node_modules/{rescript-mocha,rescript-fast-check}
         '';
         buildPhase = ''
-          npm run build:peggy
-          npm run build:rescript
-          npm run test
+          npm run build
         '';
         installPhase = ''
           mkdir -p $out
-          cp -r lib $out
+          # cp -r build $out
         '';
       };
     };

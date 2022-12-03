@@ -1,4 +1,4 @@
-# Game Theory Foundations
+# Game theory foundations
 
 [![Hercules-ci][herc badge]][herc link]
 [![Cachix Cache][cachix badge]][cachix link]
@@ -20,7 +20,6 @@ Idk how much time I'll be putting into this. I'm just figuring out what abstract
 ## Package: `nashwires`
 
 - Goal: a graphical proof assistant for open games.
-- Goal: react code for wiring/string diagram editing.
 
 ## Package: `comms`
 
