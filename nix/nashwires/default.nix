@@ -14,8 +14,7 @@
         configurePhase = ''
           cp -r ${nodeDependencies}/lib/node_modules .
           export PATH="${nodeDependencies}/bin:$PATH"
-          chmod -R +w node_modules
-          mkdir -p node_modules/rescript-fast-check/lib
+          chmod -R +w node_modules/{rescript-mocha,rescript-fast-check}
         '';
         buildPhase = ''
           npm run build:peggy
