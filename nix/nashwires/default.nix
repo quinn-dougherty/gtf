@@ -1,16 +1,17 @@
 { self, ... }: {
   perSystem = { config, self', inputs', pkgs, ... }:
     let
+      nodejs14 = pkgs.nodejs-14_x;
       nodeDependencies = (pkgs.callPackage ./npm.nix {
         inherit pkgs;
         system = pkgs.system;
-        nodejs = pkgs.nodejs-14_x;
+        nodejs = nodejs14;
       }).nodeDependencies;
     in {
       packages.nashwires = pkgs.stdenv.mkDerivation {
         name = "nashwires-compile-test";
         src = ./../../nashwires;
-        buildInputs = [ pkgs.nodejs-14_x ];
+        buildInputs = [ nodejs14 ];
         configurePhase = ''
           cp -r ${nodeDependencies}/lib/node_modules .
           export PATH="${nodeDependencies}/bin:$PATH"
