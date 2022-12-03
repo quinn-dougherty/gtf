@@ -12,8 +12,10 @@
         src = ./../../nashwires;
         buildInputs = [ pkgs.nodejs-14_x ];
         configurePhase = ''
-          ln -s ${nodeDependencies}/lib/node_modules ./node_modules
+          cp -r ${nodeDependencies}/lib/node_modules .
           export PATH="${nodeDependencies}/bin:$PATH"
+          chmod -R +w node_modules
+          mkdir -p node_modules/rescript-fast-check/lib
         '';
         buildPhase = ''
           npm run build:peggy

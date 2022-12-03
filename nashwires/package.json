@@ -9,6 +9,7 @@
   "scripts": {
     "build:peggy": "peggy src/Parser.peggy",
     "build:rescript": "rescript",
+    "build:rescript:withdeps": "rescript build -with-deps",
     "build": "peggy src/Parser.peggy && rescript",
     "clean": "rm src/Parser.js && rescript clean -with-deps",
     "start": "rescript build -w",
@@ -17,9 +18,9 @@
   },
   "mocha": {
     "recursive": true,
-    "reporter": "progress",
+    "reporter": "spec",
     "spec": [
-      "test"
+      "spec"
     ]
   },
   "keywords": [

@@ -50,21 +50,21 @@ let enclose = (x: string): string => "(" ++ x ++ ")"
   "App of two vars"->testParse("$ x1 y", App("x1"->String->Var, "y"->String->Var))
 })
 
-"parses with recursion"->describe(() => {
-  "ForAll with a ForAll as input's type and an App in the body"->testParse(
-    "ForAll x : (ForAll y: TY0, y) , $ x y",
-    {
-      variable: "x"->String,
-      itsType: {variable: "y"->String, itsType: 0->Universe, body: "y"->String->Var}->Pi,
-      body: App("x"->String->Var, "y"->String->Var),
-    }->Pi,
-  )
-  "ForAll with an App as input's type and an App in the body"->testParse(
-    "ForAll x: ($ y z), $ x z",
-    {
-      variable: "x"->String,
-      itsType: App("y"->String->Var, "z"->String->Var),
-      body: App("x"->String->Var, "z"->String->Var),
-    }->Pi,
-  )
-})
+// "parses with recursion"->describe(() => {
+//  "ForAll with a ForAll as input's type and an App in the body"->testParse(
+//    "ForAll x : (ForAll y: TY0, y) , $ x y",
+//    {
+//      variable: "x"->String,
+//      itsType: {variable: "y"->String, itsType: 0->Universe, body: "y"->String->Var}->Pi,
+//      body: App("x"->String->Var, "y"->String->Var),
+//    }->Pi,
+//  )
+//  "ForAll with an App as input's type and an App in the body"->testParse(
+//    "ForAll x: ($ y z), $ x z",
+//    {
+//      variable: "x"->String,
+//      itsType: App("y"->String->Var, "z"->String->Var),
+//      body: App("x"->String->Var, "z"->String->Var),
+//    }->Pi,
+//  )
+// })
