@@ -1,3 +1,5 @@
+![gtf](soupault/site/assets/img/gametheory.png)
+
 # Game theory foundations
 
 [![Hercules-ci][herc badge]][herc link]

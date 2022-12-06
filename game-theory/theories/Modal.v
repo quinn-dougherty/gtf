@@ -1,4 +1,3 @@
-
 (** Reading Blackburn, De Rijke, Venema *)
 (*
 From Coq Require Import String.
