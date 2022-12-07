@@ -156,7 +156,7 @@ Recall that $\overset{\leq}{\multimap}$ implies that it's codomain supports line
 
 How do we interpret this? In the agent case, actions are playing the role of $X$, which immediately suggests that we'll only have the class of continuous action spaces, so we can try $\mathbb{R}$. But $\Delta_* \mathbb{R} = \mathbb{R}^{\mathbb{R}} \overset{\leq}{\multimap} \mathbb{R} = \Delta \mathbb{R}$, which feels maybe problematic or vacuous. Possibly problematic, because I don't know how the theory of random variables adjusts to the bare real line (as opposed to a collection of subsets). Possibly vacuous, because I don't know any particular terms typed $\mathbb{R} \to \mathbb{R}$ (other than $x \mapsto x$ or ones with fairly strong conditions like increasingness) that I would expect to correspond with some foggy coherence notion for valuations in the back of my mind. Moreover, what should we think of collapsing the very distinction between selection and continuation, by setting $S = X$? $(X \to X) \to X$ isn't provable in the logic interpretation (unless I'm missing some coinductive black magic resolving loops), which is a hint that we're barking up the wrong tree. My gut isn't telling me $\Delta_* [0,1]$ would be any better.
 
-We could of course support the $\overset{\leq}{\multimap}$ requirements on the codomain by putting a monoidal preorder on $\mathbb{B}^X$ (namely setting $P := \mathbb{B}^X$, $\leq := \subseteq$, $\epsilon := X$, and $\otimes := \cap$), which wouldn't work for entirely arbitrary $X : Type$ but would work if you could interpret the scaling of a subset (like $X$ is a single suit out of a deck of cards, the valuation $\nu$ of a subset is the total number of pips across all the cards in the subset, and scalar $k$ hits it by doing some operation on that valuation, like $k := p \mapsto \lfloor |k \nu p| \rfloor$). Fix an $X$ that you can interpret in this way. Then, try $\Delta_* \mathbb{B}^X = ((X \to \mathbb{B}) \to \mathbb{R}) \overset{\leq}{\multimap} X \to mathbb{B}$. In other words, if I have an $X$-generated multi-valued "selection distribution" $E : \Delta_* \mathbb{B}^X$, then for every valuation of a subset $\mu : \mathbb{R}^(\mathbb{B}^X)$, $E \mu$ is a kind of expected subset, or it's something the agent can proactively search for like $\arg\min$ or $\arg\max$. Perhaps you could even interpret/implement it like "if $\mu$ is my complete account of what a subset is worth to me, then $E$ fixes an amount of optimization power I'm going to throw at steering the future into particular subsets over others, and $E \mu$ denotes the sort of place I would end up if I applied that much optimization to my values (insofar as landing at an actual optima implies that possibly unbounded optimization power was deployed)".
+We could of course support the $\overset{\leq}{\multimap}$ requirements on the codomain by putting a monoidal preorder on $\mathbb{B}^X$ (namely setting $P := \mathbb{B}^X$, $\leq := \subseteq$, $\epsilon := X$, and $\otimes := \cap$), which wouldn't work for entirely arbitrary $X : Type$ but would work if you could interpret the scaling of a subset (like $X$ is a single suit out of a deck of cards, the valuation $\nu$ of a subset is the total number of pips across all the cards in the subset, and scalar $k$ hits it by doing some operation on that valuation, like $k := p \mapsto \lfloor |k \nu p| \rfloor$). Fix an $X$ that you can interpret in this way. Then, try $\Delta_* \mathbb{B}^X = ((X \to \mathbb{B}) \to \mathbb{R}) \overset{\leq}{\multimap} X \to \mathbb{B}$. In other words, if I have an $X$-generated multi-valued "selection distribution" $E : \Delta_* \mathbb{B}^X$, then for every valuation of a subset $\mu : \mathbb{R}^{(\mathbb{B}^X)}$, $E \mu$ is a kind of expected subset, or it's something the agent can proactively search for like $\arg\min$ or $\arg\max$. Perhaps you could even interpret/implement it like "if $\mu$ is my complete account of what a subset is worth to me, then $E$ fixes an amount of optimization power I'm going to throw at steering the future into particular subsets over others, and $E \mu$ denotes the sort of place I would end up if I applied that much optimization to my values (insofar as landing at an actual optima implies that possibly unbounded optimization power was deployed)".
 
 ### Exercise
 
@@ -182,6 +182,18 @@ $$\mathcal{J}^{[\Delta]}_S := X \mapsto \Delta (X \to S) \to X : Type \to Type$$
 
 This isn't quite the subjective approach I'm looking for. Mapping from uncertainty over valuations to actions seems kinda from the perspective of social choice theory, where the difference in opinion across the population is captured by not being able to know a precise point estimate of a valuation, having to turn a distribution over valuations of actions into an action.
 
+## Investigation: $\mathcal{J}^{(\Delta)}_S$
+
+$$\mathcal{J}^{(\Delta)}_S := X \mapsto (X \to \Delta S) \to X : Type \to Type$$
+
+This looks to me the most like "the agent turns models/beliefs into actions".
+
+Let's unfold $\Delta$.
+
+$$\mathcal{J}^{(\Delta)}_S = X \mapsto (X \to (\mathbb{R}^X \overset{\leq}{\multimap} \mathbb{R})) \to X : Type \to Type$$
+
+The general pattern of "terms such that the input is $X$ into quantifiers and the output is $X$" might mean that terms are hardcoded predicates which can select values of $X$ to get a desired result _depending_ on whichever quantifier shows up.
+
 # Conclusion
 
 We need more candidates for the type signature of agency. An obvious way to explore is to take the first candidate someone wrote down, make an incision, and poke its guts with various functions $\mathcal{F} : Type \to Type$.
@@ -191,6 +203,8 @@ If we hammer out the dents in $\Delta_*$, and attainability works, we get a real
 What _about_ interp? I think something like the [searching for search](https://www.lesswrong.com/posts/FDjTgDcGPc7B98AES/searching-for-search-4) could, if we're not totally and completely wrong about the pillars of the agency type signature direction, show us a _ton_ about how ML naturally implements terms/proofs of things like $\mathcal{J}_S X$. A dope UX would be something like [tactical programming](https://pjreddie.com/coq-tactics/) not for creating terms/proofs, but for parsing out / identifying them in a big pile/soup of linear algebra.
 
 Selections and continuations play a huge role in compositional game theory, which I'm starting to think provides a mean embedded agency story, though I haven't grokked it quite at the level of writing a post about it just yet.
+
+None of my investigations really captured the more intricate type signature of an actually-implementable agent, one that accounted for learning, utility in the presence of uncertainty, and so on.
 
 # References
 

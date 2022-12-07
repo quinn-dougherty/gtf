@@ -1,4 +1,4 @@
-![gtf](soupault/site/assets/img/gametheory.png)
+![gtf](soupault/site/assets/img/gametheory1.png)
 
 # Game theory foundations
 
@@ -11,8 +11,6 @@
 [cachix link]: https://effective-altruism.cachix.org
 
 The name is inspired by the mighty executable textbook volumes known as Software Foundations.
-
-Idk how much time I'll be putting into this. I'm just figuring out what abstractions and libraries I want to use.
 
 ## Package: `game-theory`
 

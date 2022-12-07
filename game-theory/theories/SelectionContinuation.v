@@ -1,10 +1,34 @@
-From ExtLib Require Import Monad.
+From ExtLib Require Import Functor FunctorLaws Applicative Monad MonadLaws.
 
 Definition K (B A : Type) : Type := (A -> B) -> B.
 Definition J (B A : Type) : Type := (A -> B) -> A.
 
-Section ArrowMonad.
+Section Arrow.
   Context (A : Type).
+
+  Instance CodArrowFunctor : Functor (fun B => A -> B).
+  Proof.
+    constructor.
+    intros B B' f x x'.
+    apply f.
+    apply x.
+    apply x'.
+  Defined.
+
+  Instance CodArrowLawfulFunctor : FunctorLaws CodArrowFunctor.
+  Proof.
+    constructor; intros; reflexivity.
+  Defined.
+
+  Instance CodArrowApplicative : Applicative (fun B => A -> B).
+  Proof.
+    constructor.
+    - intros B y x.
+      apply y.
+    - intros B B' f f' x.
+      apply (f x).
+      apply (f' x).
+  Defined.
 
   Instance CodArrowMonad : Monad (fun B => A -> B).
   Proof.
@@ -16,11 +40,48 @@ Section ArrowMonad.
       apply (Beta alpha x).
   Defined.
 
-End ArrowMonad.
+  Instance CodArrowLawfulMonad : MonadLaws CodArrowMonad.
+  Proof.
+    constructor; intros; reflexivity.
+  Defined.
 
-Section ContinuationMonad.
+End Arrow.
+
+Section Continuation.
   (* Although `ExtLib` exports a `ContMonad`, we're going to reimplement here. *)
   Context (S : Type).
+
+  Instance ContinuationFunctor : Functor (K S).
+  Proof.
+    constructor.
+    unfold K.
+    intros A B f KA k.
+    apply KA.
+    intros x.
+    apply k.
+    apply f.
+    apply x.
+  Defined.
+
+  Instance ContinuationLawfulFunctor : FunctorLaws ContinuationFunctor.
+  Proof.
+    constructor; unfold K; intros; reflexivity.
+  Defined.
+
+  Instance ContinuationApplicative : Applicative (K S).
+  Proof.
+    constructor; unfold K.
+    - intros A x f.
+      apply (f x).
+    - intros A B KfA KA k.
+      apply KA.
+      intros x.
+      apply KfA.
+      intros f.
+      apply k.
+      apply f.
+      apply x.
+  Defined.
 
   Instance ContinuationMonad : Monad (K S).
   Proof.
@@ -33,10 +94,59 @@ Section ContinuationMonad.
       apply (Kf x f).
   Defined.
 
-End ContinuationMonad.
+  Instance ContinuationLawfulMonad : MonadLaws ContinuationMonad.
+  Proof.
+    constructor; unfold K; intros; reflexivity.
+  Defined.
 
-Section SelectionMonad.
+End Continuation.
+
+Section Selection.
   Context (S : Type).
+
+  Instance SelectionFunctor : Functor (J S).
+  Proof.
+    constructor.
+    unfold J.
+    intros A B f x g.
+    apply f.
+    apply x.
+    intros x'.
+    apply g.
+    apply f.
+    apply x'.
+  Defined.
+
+  Instance SelectionLawfulFunctor : FunctorLaws SelectionFunctor.
+  Proof.
+    constructor; unfold J; intros; compute; reflexivity.
+  Defined.
+
+  Instance SelectionApplicative : Applicative (J S).
+  Proof.
+    constructor; unfold J.
+    - intros A x f.
+      apply x.
+    - intros A B f g h.
+      apply f.
+      + intros i.
+        apply h.
+        apply i.
+        apply g.
+        intros x.
+        apply h.
+        apply i.
+        apply x.
+      + apply g.
+        intros x.
+        apply h.
+        apply f.
+        * intros i.
+          apply h.
+          apply i.
+          apply x.
+        * apply x.
+  Defined.
 
   Instance SelectionMonad : Monad (J S).
   Proof.
@@ -50,4 +160,9 @@ Section SelectionMonad.
       apply Yg; assumption.
   Defined.
 
-End SelectionMonad.
+  Instance SelectionLawfulMonad : MonadLaws SelectionMonad.
+  Proof.
+    constructor; unfold J; intros; reflexivity.
+  Defined.
+
+End Selection.
