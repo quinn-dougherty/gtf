@@ -165,4 +165,37 @@ Section Selection.
     constructor; unfold J; intros; reflexivity.
   Defined.
 
+  Definition selectionProd {A B : Type} (x : J S A) (y : J S B) : J S (A * B).
+  Proof.
+    unfold J in *.
+    intros f.
+    split.
+    - apply x.
+      intros x'.
+      apply f.
+      split.
+      + apply x'.
+      + apply y.
+        intros y'.
+        apply f.
+        split; assumption.
+    - apply y.
+      intros y'.
+      apply f.
+      split.
+      + apply x.
+        intros x'.
+        apply f.
+        split; assumption.
+      + apply y'.
+  Defined.
+
 End Selection.
+
+Section Attainability.
+  Context (S X : Type).
+
+  Definition attainedBy (epsilon : J S X) : K S X :=
+    fun k => k (epsilon k).
+
+End Attainability.
