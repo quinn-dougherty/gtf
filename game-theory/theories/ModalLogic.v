@@ -51,22 +51,28 @@ Module LiftProp.
   (*| In this approach I look at making modal operators augmentations of the basic coq's Prop |*)
   Inductive Modal (A : Type) : Type :=
     | lift : A -> Modal A
-    | box : A -> Modal A.
+    | box : Modal A -> Modal A.
 
   (* Coercion lift Prop : Prop >-> Modal Prop. *)
   #[export] Instance ModalFunctor : Functor Modal.
   Proof.
     constructor.
     intros A B f MA.
-    induction MA eqn:E.
-    - apply (lift B (f a)).
-    - apply (box B (f a)).
+    generalize dependent f.
+    induction MA; intros f.
+    - apply (lift _ (f a)).
+    - apply (IHMA f).
   Defined.
 
   #[export] Instance ModalLawfulFunctor : FunctorLaws ModalFunctor.
   Proof.
-    constructor; intros; induction x; reflexivity.
-  Defined.
+    constructor.
+    - intros A x.
+      induction x; auto.
+      admit.
+    - intros A B C f g x.
+      induction x; auto.
+  Admitted.
 
   (*| This applicative instance violates the interchange law: u <*> pure v = pure (fun f => f v) <*> u |*)
   #[export] Instance ModalApplicative : Applicative Modal.
@@ -74,13 +80,15 @@ Module LiftProp.
     constructor.
     - intros A x; apply (lift A x).
     - intros A B Mf Mx.
-      induction Mf; apply (fmap a Mx).
+      induction Mf.
+      + apply (fmap a Mx).
+      + apply IHMf.
   Defined.
 
   Section LawfulApplicative.
     Parameter (A B C : Type).
     Theorem applicativeIdentity (x : Modal A) : pure id <*> x = x.
-    Proof. induction x; compute; easy. Qed.
+    Proof. induction x; compute. Admitted.
     Theorem applicativeHomomorphism (f : A -> B) (x : A) : (pure f) <*> (pure x) = pure (f x).
     Proof. reflexivity. Qed.
 
@@ -92,14 +100,15 @@ Module LiftProp.
 
   Definition join (A : Type) (MMx : Modal (Modal A)) : Modal A.
   Proof.
-    induction MMx eqn:E; assumption.
-  Defined.
+    induction MMx eqn:E. apply a.
+  Admitted.
 
   Definition not__modal (x : Modal Prop) : Modal Prop := lift _ not <*> x.
+  Check @fmap.
   Definition diamond : Modal Prop -> Modal Prop :=
     fun x => match x with
-          | lift _ x => fmap not (box _ (not x))
-          | box _ x => (lift _ not) <*> (box _ (not x))
+          | lift _ x => fmap not (box _ (lift _ (not x)))
+          | box _ x => fmap not x (* these are incorrect. *)
           end.
   Definition or__modal (x y : Modal Prop) : Modal Prop := lift _ or <*> x <*> y.
   Definition and__modal (x y : Modal Prop) : Modal Prop := lift _ and <*> x <*> y.
@@ -116,6 +125,6 @@ Module LiftProp.
     | subsentence_self : forall P, subsentence P P
     | subsentence_arrowDomain : forall P Q R, subsentence (lift _ (fun (x y : Prop) => x -> y) <*> P <*> Q) R -> subsentence P R
     | subsentence_arrowCodomain : forall P Q R, subsentence (lift _ (fun (x y : Prop) => x -> y) <*> P <*> Q) R -> subsentence Q R
-    | subsentence_box : forall P Q, subsentence (box _ P) Q -> subsentence (lift _ P) Q.
+    | subsentence_box : forall P Q, subsentence (box _ P) Q -> subsentence P Q.
 
 End LiftProp.
