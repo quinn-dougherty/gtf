@@ -97,7 +97,7 @@
 # Example:
 [preprocessors]
   md = "pandoc -f markdown -t html"
-  v = "alectryon -R site/theories GTF --frontend coq+rst --backend webpage"
+  v = "alectryon -Q site/theories GTF --frontend coq+rst --backend webpage"
 
 # Pages can be further processed with "widgets"
 

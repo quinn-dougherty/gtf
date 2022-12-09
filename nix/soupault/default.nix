@@ -18,7 +18,7 @@
         src = ./../../soupault;
         configurePhase = ''
           cp -r ${coq-gt}/default/theories site
-          chmod +rw site/**
+          chmod -R +rw site/**
         '';
         buildPhase = ''
           soupault

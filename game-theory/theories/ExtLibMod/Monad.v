@@ -1,3 +1,4 @@
+(*| The famous monoid in the category of endofunctors |*)
 From GTF.ExtLibMod Require Import Functions.
 
 Module Type T.
@@ -10,7 +11,7 @@ Module Notations (Monad : T).
 
   Notation "c >>= f" := (Monad.bind c f) (at level 58, left associativity).
   Notation "f =<< c" := (Monad.bind _ _ _ _ c f) (at level 61, right associativity).
-  (*Notation "f >=> g" := (mcompose _ _ _ _ _ f g) (at level 61, right associativity).*)
+  (* Notation "f >=> g" := (mcompose _ _ _ _ _ f g) (at level 61, right associativity). *)
 
   Notation "e1 ;; e2" := (Monad.bind e1 (fun _ => e2)) (at level 61, right associativity).
 
