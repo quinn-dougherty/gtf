@@ -7,7 +7,7 @@ From mathcomp Require Import classical_sets interval all_ssreflect all_algebra o
 From mathcomp.analysis Require Import reals topology measure.
 Import Order.Theory.
 
-From GTF Require Import Giry.
+From GTF Require Import GiryClasses.
 
 Module VNM (Number : Interval).
   Module P := Probability Number.

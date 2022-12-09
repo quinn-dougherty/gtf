@@ -1,95 +1,60 @@
-From Paco Require Import paco.
-From ExtLib Require Import Functor Applicative Monad MonadLaws CoMonad.
 From mathcomp Require Import classical_sets interval all_ssreflect all_algebra order.
 From mathcomp.analysis Require Import reals topology measure.
-Definition swap {A B C : Type} (f : A -> B -> C) : B -> A -> C.
-Proof. intros y x. apply (f x y). Defined.
 
-Module Type Interval.
-  Local Open Scope ring_scope.
-  Local Open Scope classical_set_scope.
-  Parameter (t : realType).
-  Definition unit_compact : Type := subspace `[0 : t, 1 : t].
-  Definition fin_unit_compact : Type := seq unit_compact.
-  Class convex (ps : fin_unit_compact) : Type := {
-      sums_to_one : foldr (@GRing.add t) (0 : t) ps = 1
-    }.
-  Definition unit_left_half_open : Type := subspace `]0 : t, 1 : t].
-  Definition unit_open : Type := subspace `]0 : t, 1 : t[.
-End Interval.
+From GTF Require Import SelectionContinuation.
+From GTF.ExtLibMod Require Functor Applicative Monad.
 
-(*| A probability distribution knows how to turn a random variable (a value assignment) to an expected value. |*)
-Module Probability (Number : Interval).
+Module Type Accept.
+  Parameter (t : finType).
+End Accept.
+
+Module Probability (R : Return) (A : Accept).
 
   Local Open Scope ring_scope.
+  Module Intervals.
+    Local Open Scope classical_set_scope.
+    Definition unit_compact : Type := subspace `[0 : R.t, 1 : R.t].
+    Inductive convex : seq unit_compact -> Type :=
+      | sums_to_one : forall w, foldr (@GRing.add R.t) (0 : R.t) w = 1 -> convex w.
+    Definition unit_left_half_open : Type := subspace `]0 : R.t, 1 : R.t].
+    Definition unit_open : Type := subspace `]0 : R.t, 1 : R.t[.
+  End Intervals.
 
-  Section RandomVariable.
-    Context {X : Type}.
-    Definition RV : Type := X -> Number.t.
-    Definition rvLeq : RV -> RV -> Prop := fun g g' => forall (x : X), g x <= g' x.
-    Definition rvScale : Number.t -> RV -> RV := fun k f x => k * f x.
-    Definition rvAdd  : RV -> RV -> RV := fun f g x => f x + g x.
-  End RandomVariable.
+  Module RV.
+    Definition t (A : Type) : Type := A -> R.t.
+    Definition leq {A : Type} (f g : t A) : Prop := forall (x : A), f x <= g x.
+    Definition scale {A : Type} (k : R.t) (f : t A) : t A := fun x => k * f x.
+    Definition add {A : Type} (f g : t A) : t A := fun x => f x + g x.
+    Definition constant {A : Type} (rv : t A) : Prop := forall (x1 x2 : A), rv x1 = rv x2.
+  End RV.
 
-  Section Expectation.
-    Context {X : Type}.
-    Definition EV : Type := @RV X -> Number.t.
-    Definition monotone (f : EV) : Prop := forall g g', rvLeq g g' -> f g <= f g'.
-    Definition scaleative (f : EV) : Prop := forall (k : Number.t) (rv : RV), f (rvScale k rv) = k * f rv.
-    Definition additive (f : EV) : Prop := forall (rv1 rv2 : RV), f rv1 + f rv2 = f (rvAdd rv1 rv2).
-    Definition constant (rv : RV) : Prop := forall (x1 x2 : X), rv x1 = rv x2.
-    Definition sendsConstantsToOne (f : EV) : Prop
-      := forall (rv : RV), constant rv -> f rv = 1.
+  Module Continuation := Continuation R.
+  Definition t : Type -> Type := Continuation.t.
 
-    Class EVLaws (E : EV) : Type := {
-      EV_monotone : monotone E;
-      EV_scaleative : scaleative E;
-      EV_rvAdditive : additive E;
-      EV_sendsConstantsToOne : sendsConstantsToOne E
-    }.
+  Module Type ExpectationLawful.
+    Parameter monotone : forall {A : Type} (f : t A) (rv1 rv2 : RV.t A), RV.leq rv1 rv2 -> f rv1 <= f rv2.
+    Parameter homogeneous : forall {A : Type} (f : t A) (k : R.t) (rv : RV.t A), f (RV.scale k rv) = k * f rv.
+    Parameter additive : forall {A : Type} (f : t A) (rv1 rv2 : RV.t A), f rv1 + f rv2 = f (RV.add rv1 rv2).
+    Parameter sendsConstantsToOne : forall {A : Type} (f : t A) (rv : RV.t A), RV.constant rv -> f rv = 1.
+  End ExpectationLawful.
 
-  End Expectation.
-
-  (*| Expected value is a monad. |*)
-  #[export] Instance EVMonad : Monad (@EV).
-  Proof.
-    constructor.
-    - intros X x.
-      unfold EV, RV.
-      intros rv.
-      apply (rv x).
-    - intros X Y mx mf.
-      unfold EV, RV in *.
-      intros rv.
-      remember (swap mf) as mf'; clear Heqmf'.
-      specialize (mf' rv).
-      specialize (mx mf').
-      apply mx.
-  Defined.
-
-  (*| Correctness of monad proof. |*)
-  #[export] Instance EVLawfulMonad : MonadLaws EVMonad.
-  Proof.
-    constructor; intros; unfold bind, ret, EVMonad, swap; reflexivity.
-  Qed.
-
-  Definition dirac {X : Type} (x : X) : EV := fun f => f x. (* monadic return, in theory *)
-
-  Section Giry.
-    Context {X Y : Type} (E : @EV X) (E' : @EV Y).
-    Context `{EVLaws (@EV X)} `{EVLaws (@EV Y)}.
-
-    Definition flatten (eev : @EV (@EV X)) : @EV X := fun f => eev (fun mu => mu f).
-    Definition tensorialStrength (inp : X * (@EV Y)) : @EV (X * Y) := let x := fst inp in let v := snd inp in fun f => v (fun y => f (x, y)).
-    (* Definition semidirectProduct (f : X -> @EV Y) (x : @EV X) : @EV (X * Y) := fun f => x (fun mu => f mu (fun y => mu(x,y))). *)
-    Definition fmap__giry (f : X -> Y) (x : @EV X) : @EV Y.
-      Proof.
-        unfold EV, RV in *.
-        intros y.
-        apply x; intros f'.
-        apply y; apply f; apply f'.
-      Defined.
-
-  End Giry.
+  Module GiryOperations (EV : ExpectationLawful).
+    Definition flatten {X : Type} (eev : t (t X)) : t X := fun f => eev (fun mu => mu f).
+    Definition tensorialStrength {X Y : Type} (inp : X * t Y) : t (X * Y) := let x := fst inp in let v := snd inp in fun f => v (fun y => f (x, y)).
+    Definition fmap {X Y : Type} (f : X -> Y) (E : t X) : t Y := Continuation.Functor.fmap f E.
+    Definition semidirectProduct {X Y : Type} (f : X -> t Y) (x : t X) : t (X * Y).
+    Proof.
+      intros j.
+      unfold t, Continuation.t in *.
+      apply x.
+      intros x'.
+      apply (f x').
+      intros y'.
+      apply j.
+      apply (x', y').
+    Defined.
+  End GiryOperations.
 
 End Probability.
+
+(*| Example |*)

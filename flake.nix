@@ -30,7 +30,7 @@
         [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
       hercules-ci.flake-update = {
         enable = true;
-        when.dayOfWeek = [ "Thu" ];
+        when.dayOfMonth = 1;
       };
     };
 }
