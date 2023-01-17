@@ -16,7 +16,7 @@
 
   outputs =
     { self, nixpkgs, flake-parts, nix-doom-emacs, hercules-ci-effects }@inputs:
-    flake-parts.lib.mkFlake { inherit (inputs) self; } {
+    flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         hercules-ci-effects.flakeModule
         ./nix/soupault
