@@ -31,6 +31,7 @@
       hercules-ci.flake-update = {
         enable = true;
         when.dayOfMonth = 1;
+        autoMergeMethod = "merge";
       };
     };
 }
