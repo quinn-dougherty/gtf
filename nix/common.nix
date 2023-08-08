@@ -10,7 +10,7 @@
           name = "gtf-development";
           buildInputs = builtins.concatLists [
             lintDeps
-            [ node2nix ]
+            [ node2nix nodePackages.npm-check-updates ]
             self'.devShells.coq.buildInputs
             self'.devShells.pandoc.buildInputs
             self'.devShells.soupault.buildInputs
