@@ -4,7 +4,7 @@ pkgs.vscode-with-extensions.override {
   vscodeExtensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
     name = "VSCoq";
     publisher = "maximedenes";
-    version = "0.3.6";
-    sha256 = "sha256-b0gCaEzt5yAj53oLFZSXSD3bum9J1fYes/uf9+OlUek=";
+    version = "1.9.0";
+    sha256 = "sha256-6S1Ykaz1lsxw+pTry6+ZzMH5QiFXvNkf3UU1aX7K83I=";
   }];
 }

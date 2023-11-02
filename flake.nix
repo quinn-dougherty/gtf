@@ -2,7 +2,7 @@
   description = "Game Theory Foundations - executable textbook";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.11";
+    nixpkgs.url = "nixpkgs/nixos-23.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
     nix-doom-emacs = {
       url = "github:nix-community/nix-doom-emacs";
