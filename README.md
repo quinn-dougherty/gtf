@@ -1,5 +1,7 @@
 ![gtf](soupault/site/assets/img/gametheory1.png)
 
+**Everything in here is super unfinished.**
+
 # Game theory foundations
 
 [![Hercules-ci][herc badge]][herc link]
