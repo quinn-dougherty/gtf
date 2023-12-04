@@ -4,13 +4,10 @@
 
 # Game theory foundations
 
-[![Hercules-ci][herc badge]][herc link]
-[![Cachix Cache][cachix badge]][cachix link]
+[![Built With Nix][bwn badge]][bwn link]
 
-[herc badge]: https://img.shields.io/badge/Herc-CI-yellowgreen?style=plastic&logo=nixos
-[herc link]: https://hercules-ci.com/github/quinn-dougherty/gtf
-[cachix badge]: https://img.shields.io/badge/Cachix-effective--altruism-blueviolet?style=plastic&logo=nixos
-[cachix link]: https://effective-altruism.cachix.org
+[bwn badge]: https://builtwithnix.org/badge.svg
+[bwn link]: https://builtwithnix.org
 
 The name is inspired by the mighty executable textbook volumes known as Software Foundations.
 
@@ -18,10 +15,6 @@ The name is inspired by the mighty executable textbook volumes known as Software
 
 - Goal: a `coq` library for game theory.
 - Goal: annotate it to be a textbook and add exercises.
-
-## Package: `nashwires`
-
-- Goal: a graphical proof assistant for open games.
 
 ## Package: `comms`
 

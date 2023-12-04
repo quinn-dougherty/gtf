@@ -30,7 +30,6 @@ in {
           # default.enable = false;
           checks.outputs = self.checks.${hciSystem}.lint;
           coq-game-theory.outputs = packages.coq-game-theory;
-          nashwires.outputs = packages.nashwires;
           development.outputs = self.devShells.${hciSystem};
           comms.outputs.effects = documentEffectForAll comms-documents;
           soupault.outputs.effects = soupaultDeploy;

@@ -14,7 +14,6 @@
             self'.devShells.coq.buildInputs
             self'.devShells.pandoc.buildInputs
             self'.devShells.soupault.buildInputs
-            self'.packages.nashwires.buildInputs
           ];
         };
       checks.lint = pkgs.stdenv.mkDerivation {

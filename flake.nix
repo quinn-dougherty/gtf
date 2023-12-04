@@ -20,7 +20,6 @@
       imports = [
         hercules-ci-effects.flakeModule
         ./nix/soupault
-        ./nix/nashwires
         ./nix/game-theory
         ./nix/comms
         ./nix/herc.nix
